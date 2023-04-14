@@ -1,0 +1,5 @@
+textarea:focus ~ label,
+textarea ~ label {
+  top: -.75em!important;
+  font-size: 12px!important;
+}

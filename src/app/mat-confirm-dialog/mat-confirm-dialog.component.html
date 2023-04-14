@@ -1,0 +1,12 @@
+<div class="p-2">
+  <div class="content-container">
+    <mat-icon id="closeIcon" (click)="closeDialog()">close</mat-icon>
+    <div class="content-span full-width">
+      <span class="d-flex justify-content-center">
+        {{data.message}}
+      </span>
+    </div>
+  </div>
+  <button mat-flat-button [mat-dialog-close]="false" id="NoButton">No</button>
+  <button mat-flat-button [mat-dialog-close]="true" id="YesButton">Yes</button>
+</div>

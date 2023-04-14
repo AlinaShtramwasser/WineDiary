@@ -1,0 +1,125 @@
+.winery-item {
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    padding: 1rem;
+    width: 100%;
+    flex-wrap: nowrap;
+  
+    img {
+      width: 100px;
+      box-shadow: 0 3px 6px rgba(0, 0, 0, 0.16), 0 3px 6px rgba(0, 0, 0, 0.23);
+      margin-right: 1rem;
+    }
+  
+    .winery-list-left {
+      font-size: x-large;
+      flex: 1 1 0;
+    }
+  
+    .winery-list-right {
+      display: flex;
+      flex-direction: column;
+      font-size: large;
+      align-items: flex-end;
+    }
+  
+    .winery-category-icon {
+      vertical-align: middle;
+      margin-right: 0.5rem;
+    }
+  
+    .winery-category {
+      vertical-align: middle;
+      line-height: 1;
+    }
+  
+    &.loading-item {
+      .image-container {
+        width: 100px;
+        height: 66px;
+        animation: pulse 1s infinite ease-in-out;
+        margin-right: 1rem;
+      }
+  
+      .winery-list-detail {
+  
+        h5,
+        .winery-category {
+          width: 150px;
+          height: 14px;
+          display: block;
+          animation: pulse 1s infinite ease-in-out;
+        }
+      }
+  
+      .winery-list-action {
+        .winery-badge {
+          display: block;
+          width: 100px;
+          height: 14px;
+          animation: pulse 1s infinite ease-in-out;
+        }
+  
+        h6 {
+          width: 25px;
+          height: 14px;
+          animation: pulse 1s infinite ease-in-out;
+        }
+      }
+    }
+  }
+  
+  .winery-header {
+    color: #3F51B5;
+    //color: #0D89EC;
+    font-size: xx-large;
+    font-weight: bold;
+  }
+  
+  //for the table
+  .winery-data {
+    font-size: large;
+  }
+  
+  @media screen and (max-width: 960px) {
+    .winery-header {
+      font-size: large;
+    }
+  
+    .winery-item {
+  
+      font-size: medium;
+  
+      img {
+        width: 50px;
+      }
+    }
+  }
+  
+  .outer{
+    background-image: url("../../assets/images/south-australia-vineyard.jpg");
+    height: 100vh;
+    background-size:cover;  
+    background-repeat: none;
+  }
+  
+  .transparentBackground{
+    background-color: rgba(255,255,255,0.5);
+  }
+  .circButton{
+    width: 30vh;
+    height:30vh;
+    border-radius:50%;
+    margin:0%;
+    padding:0%;
+    background-size:calc(250%);
+    background-position: center;
+    background-image: url("../../assets/images/barelTransparentBackground.png");
+  }
+  
+  .text{
+    width:40vh;
+  }
+  
+  

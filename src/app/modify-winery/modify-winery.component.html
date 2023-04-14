@@ -1,0 +1,67 @@
+<div class="container">
+  <form novalidate (ngSubmit)="save();" [formGroup]="wineryForm" class="p-fluid grid">
+    <div class="col-6 mx-auto pt-5">
+      <p-panel header={{pageTitle}}>
+
+        <div class="m-5">
+          <span class="p-float-label">
+            <input type="text" id="wineryNameID" pInputText formControlName="wineryName" class="form-control">
+            <label for="wineryNameID">Winery Name</label>
+          </span>
+          <small *ngIf="wineryForm.controls.wineryName.errors?.required && wineryForm.touched && !wineryForm.valid"
+            class="p-error block">Please enter winery name.</small>
+        </div>
+
+        <div class="m-5">
+          <span class="p-float-label">
+            <input type="text" id="wineryUrlID" pInputText formControlName="wineryUrl" class="form-control">
+            <label for="wineryUrlID">URL</label>
+          </span>
+          <small class="p-error block">{{urlErrorMessage}}</small>
+        </div>
+
+        <div class="m-5">
+          <span class="p-float-label">
+            <p-inputMask id="wineryPhoneID" formControlName="wineryPhone" mask="(999) 999-9999">
+            </p-inputMask>
+            <label for="wineryPhoneID">Phone</label>
+          </span>
+        </div>
+
+        <div class="m-5">
+          <span class="p-float-label">
+            <input type="text" id="wineryEmailID" pInputText formControlName="wineryEmail" class="form-control">
+            <label for="wineryEmailID">Email</label>
+          </span>
+          <small class="p-error block">{{emailErrorMessage}}</small>
+        </div>
+
+        <div class="m-5">
+          <span class="p-float-label">
+            <textarea maxlength="250" id="WineryNotes" rows="5" cols="50" formControlName="wineryNotes"
+              pInputTextArea></textarea>
+            <label for="WineryNotes">Notes</label>
+          </span>
+        </div>
+
+        <div class="m-5">
+          <h3>Rating</h3>
+          <p-rating id="wineryRatingID" formControlName="wineryRating" [cancel]="false"></p-rating>
+        </div>
+
+        <div class="row pb-2 justify-content-center col-12">
+          <div class="col-3">
+            <button pButton type="button" class="p-button-rounded" label="Submit" (click)="save();"
+              [disabled]="!wineryForm.valid">
+            </button>
+          </div>
+          <div class="col-2">
+            <!-- remember to maybe confirm that the user wants to leave -->
+            <button pButton type="button" class="p-button-rounded" label="Back" [routerLink]="['/wineries']">
+            </button>
+          </div>
+        </div>
+      </p-panel>
+    </div>
+  </form>
+</div>

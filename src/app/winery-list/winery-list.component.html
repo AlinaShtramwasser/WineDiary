@@ -1,0 +1,86 @@
+<div>
+  <div *ngIf="isLoggedin === true">
+    <p-table [value]="wineries" [globalFilterFields]="['Name']" [responsive]='true' [scrollable]='true'>
+      <!-- <ng-template pTemplate="caption">
+        <div class="winery-header row  p-d-flex p-ai-center p-jc-between">
+          <div class="col-10">My Wineries</div>
+          <div class="col-2">
+            <a mat-fab color="primary" [routerLink]="['/wineries', 0, 'edit']">
+              <span class="material-icons">add</span>
+            </a>
+          </div>
+        </div>
+      </ng-template> -->
+      <!-- <div class="form-group">
+        <label>First Name</label>
+        <input type="text" class="form-control" [value]="socialUser.firstName" id="firstname" readonly>
+      </div>
+      <div class="form-group">
+        <label>Last Name</label>
+        <input type="text" class="form-control" [value]="socialUser.lastName" id="lastname" readonly>
+      </div>
+      <div class="form-group">
+        <label>Email</label>
+        <input type="text" class="form-control" [value]="socialUser.email" id="email" readonly>
+      </div> -->
+      <ng-template pTemplate="header">
+        <tr>
+          <th>
+            <span class="winery-header">My Wineries</span>
+          </th>
+          <th colspan="2"></th>
+          <th>
+            <span class="p-4">
+              <a mat-fab color="basic" [routerLink]="['/wineries', 0, 'edit']">
+                <span class="material-icons">add</span>
+              </a>
+            </span>
+          </th>
+        </tr>
+        <tr>
+          <th style="text-align:left" [pSortableColumn]='"Name"'>Name
+            <p-sortIcon [field]='"Name"'></p-sortIcon>
+            <p-columnFilter type='text' field='Name' display='menu'></p-columnFilter>
+          </th>
+          <th style="text-align:left">Phone Number</th>
+          <th style="text-align:left" [pSortableColumn]='"Rating"'>Rating
+            <p-sortIcon [field]='"Rating"'></p-sortIcon>
+          </th>
+          <th colspan="2">
+          </th>
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-winery>
+        <tr class="winery-data">
+          <td style="text-align:left">
+            <img src="assets/images/wineryLogo.jpg" alt="{{winery.Name}}" width="100" class="p-shadow-4" />
+            {{winery.Name}}
+          </td>
+          <td style="text-align:left">{{winery.Phone}}</td>
+          <td style="text-align:left">
+            <p-rating [ngModel]="winery.Rating" (onRate)="saveRating($event, winery.Id);" [cancel]="false"></p-rating>
+          </td>
+          <td colspan="2">
+            <a mat-fab color="primary" class="m-2" [routerLink]="['/wineries',  winery.Id, 'edit']">
+              <span class="material-icons">edit</span>
+            </a>
+            <a mat-fab color="warn" (click)="deleteWinery(winery.Id);">
+              <span class="material-icons">delete</span>
+            </a>
+          </td>
+          <!-- <td>
+            <button type="button" pButton pRipple label="Edit" [routerLink]="['/wineries', winery.Id, 'edit']"></button>
+          </td>
+          <td>
+            <button type="button" pButton pRipple label="Delete" (click)="DeleteWinery(winery.Id);"></button>
+          </td> -->
+        </tr>
+      </ng-template>
+      <ng-template pTemplate="summary">
+        <div class="p-d-flex p-ai-center p-jc-between">
+          In total there are {{wineries ? wineries.length : 0 }} wineries.
+        </div>
+      </ng-template>
+    </p-table>
+  </div>
+</div>

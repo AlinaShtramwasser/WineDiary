@@ -1,1 +1,46 @@
 /* You can add global styles to this file, and also import other style files */
+@import '~primeicons/primeicons.css';
+@import '~primeng/resources/primeng.min.css';
+@import "@angular/material/prebuilt-themes/indigo-pink.css";
+html,
+body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.confirm-dialog-container .content-container {
+    margin: 10px 10px 10px 10px;
+    color: #8f9cb5;
+    display: flex;
+}
+
+.confirm-dialog-container #closeIcon {
+    margin-left: auto;
+    order: 2;
+    font-weight: bolder;
+}
+
+.confirm-dialog-container .mat-dialog-container {
+    border-radius: .25em .25em .4em .4em;
+    padding: 0;
+}
+
+.confirm-dialog-container #closeIcon:hover {
+    cursor: pointer;
+}
+
+.confirm-dialog-container #NoButton {
+    height: 50px;
+    width: 50%;
+    background-color: #AFB7C8;
+}
+
+.confirm-dialog-container #YesButton {
+    height: 50px;
+    width: 50%;
+    background-color: #fc7169;
+}
