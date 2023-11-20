@@ -96,27 +96,12 @@
       }
     }
   }
-  
-  .outer{
-    background-image: url("../../assets/images/south-australia-vineyard.jpg");
-    height: 100vh;
-    background-size:cover;  
-    background-repeat: none;
-  }
+
   
   .transparentBackground{
     background-color: rgba(255,255,255,0.5);
   }
-  .circButton{
-    width: 30vh;
-    height:30vh;
-    border-radius:50%;
-    margin:0%;
-    padding:0%;
-    background-size:calc(250%);
-    background-position: center;
-    background-image: url("../../assets/images/barelTransparentBackground.png");
-  }
+  
   
   .text{
     width:40vh;

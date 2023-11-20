@@ -1,48 +1,49 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output, NgZone } from '@angular/core';
 import { MessageService } from 'primeng/api';
 import { Subscription } from 'rxjs';
 import { DialogService } from '../dialog.service';
 import { WineryService } from '../winery.service';
 import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
-//google authentication example from: https://www.positronx.io/angular-google-social-login-tutorial-with-example/
+import { Router } from '@angular/router';
+import { GoogleSigninService } from '../google-signin.service';
 
 @Component({
-  selector: 'app-winery-list',
-  templateUrl: './winery-list.component.html',
-  styleUrls: ['./winery-list.component.scss']
+	selector: 'app-winery-list',
+	templateUrl: './winery-list.component.html',
+	styleUrls: ['./winery-list.component.scss']
 })
 export class WineryListComponent implements OnInit {
 
-  private getAllSubscription: Subscription | undefined;
-	/*loginForm: FormGroup; to be used for the google login
-  emailErrorMessage: string;
-  	//socialUser!: SocialUser;
-	passwordError: boolean;
-  */
+	private getAllSubscription: Subscription | undefined;
 	codeName = 'winery-grid';
 	wineries = [];
-	isLoggedin?: boolean;
 	totalRecords: number = 0;
+	email: string | undefined;
+	name: string | undefined;
+	token: string | undefined;
+	@Output() onSigninSuccess = new EventEmitter();
+	@Input() clientId: string | undefined;
 	alternativeUrl: string = "assets/images/wineryLogo.jpg"
 	/*
 	** On component creation (inject services).
 	*/
 	constructor(
-		private fb: FormBuilder,
 		private _messageService: MessageService,
 		// to talk to the web server
 		private _data: WineryService,
 		private _dialoService: DialogService,
-	//private socialAuthService: SocialAuthService
+		private router: Router,
+		private service: GoogleSigninService,
+		private _ngZone: NgZone
 	) { }
 
 	/*
 	** On component initialization, get all data from the data service.
 	*/
 	ngOnInit() {
+
 		// load all records
 		this.getAllWineries();
-		this.isLoggedin = true;
 		//setting up all the fields and validations
 		/*this.loginForm = this.fb.group({
 			googlePassword: ['', Validators.required],
@@ -62,26 +63,12 @@ export class WineryListComponent implements OnInit {
 			);*/
 	}
 
-	login(): void {
-		/*var emailControl = this.loginForm.get("googleEmail");
-		var passwordControl = this.loginForm.get("googlePassword");
-		//validation is OK
-		if (this.loginForm.valid) {
-			//changes exist
-			if (this.loginForm.dirty) {
-				this.isLoggedin = true;
-
-				var email = emailControl.value;
-				var password = passwordControl.value;
-				var result = this.socialAuthService.signIn(GoogleLoginProvider.PROVIDER_ID);
-				alert(result);
-			}
-		} else {
-			this.setMessage({ control: emailControl });
-			this.passwordError = true;
-		}*/
-	}
-
+	/**
+	 * Calling Google Authentication service
+	 */
+	//   googleAuthenticate(){
+	//     this.auth.authenticateUser(this.clientId, this.onSigninSuccess);
+	//   }
 	setMessage({ control }: { control: AbstractControl; }): void {
 		/*this.emailErrorMessage = '';
 		if (control.errors) {
@@ -140,6 +127,15 @@ export class WineryListComponent implements OnInit {
 		this._messageService.add({
 			key: 'app', sticky: true,
 			severity: 'error', summary: 'Get wineries Error', detail: error || 'Server error'
+		});
+	}
+
+	//loggin out
+	public logout() {
+		//will get rid of jwt token and go to login screen, storing in local storage
+		this.service.signOut();
+		this._ngZone.run(() => {
+			this.router.navigate(['/']).then(() => window.location.reload());
 		});
 	}
 

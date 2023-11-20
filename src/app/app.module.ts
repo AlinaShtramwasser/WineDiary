@@ -3,33 +3,37 @@ import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
 import { AppComponent } from './app.component';
-import {InputTextModule} from 'primeng/inputtext';
-import {InputMaskModule} from 'primeng/inputmask';
 //import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
 import {PanelModule} from 'primeng/panel';
+import {InputTextModule} from 'primeng/inputtext';
+import {InputMaskModule} from 'primeng/inputmask';
+import { ToastModule } from 'primeng/toast';
+import {VirtualScrollerModule} from 'primeng/virtualscroller';
+import { MessageService } from 'primeng/api';
+import {RatingModule} from 'primeng/rating';
+import {ButtonModule} from 'primeng/button';
 //for fetching data from external apis and provide them to the app as a stream
 import { HttpClientModule } from "@angular/common/http";
 import {TableModule} from 'primeng/table';
 import { WineryService } from './winery.service';
-import { ToastModule } from 'primeng/toast';
-import { MessageService } from 'primeng/api';
 import { WineryListComponent } from './winery-list/winery-list.component';
-import {VirtualScrollerModule} from 'primeng/virtualscroller';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AngularMaterialModule } from './angular-material.module';
-import {RatingModule} from 'primeng/rating';
-import {ButtonModule} from 'primeng/button';
 import { MatConfirmDialogComponent } from './mat-confirm-dialog/mat-confirm-dialog.component';
 import { ModifyWineryComponent } from './modify-winery/modify-winery.component';
+//for login with google
+import { LoginComponent } from './login/login.component';
+import { CredentialResponse, PromptMomentNotification } from 'google-one-tap';
 @NgModule({
-  declarations: [	
+  declarations: [		
     AppComponent,
     WineryListComponent,
     MatConfirmDialogComponent,
     MatConfirmDialogComponent,
-      ModifyWineryComponent
+      ModifyWineryComponent,
+      LoginComponent
    ],
   imports: [
     BrowserModule,
@@ -42,13 +46,21 @@ import { ModifyWineryComponent } from './modify-winery/modify-winery.component';
     VirtualScrollerModule,
     HttpClientModule,
     RouterModule.forRoot([
-      { path: "", component: WineryListComponent },
+      { path: "", component: LoginComponent },
       {path: 'wineries', component: WineryListComponent},
       {
         path: 'wineries/:id/edit',
         component: ModifyWineryComponent
       }
     ]),
+    // RouterModule.forRoot([
+    //   { path: "", component: WineryListComponent },
+    //   {path: 'wineries', component: WineryListComponent},
+    //   {
+    //     path: 'wineries/:id/edit',
+    //     component: ModifyWineryComponent
+    //   }
+    // ]),
     TableModule,
     ToastModule,
     InputMaskModule,
@@ -62,3 +74,9 @@ import { ModifyWineryComponent } from './modify-winery/modify-winery.component';
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class AppModule { }
+/*TODO
+Group the things - eg. Primeng, Materials etc and move them out - make a folder
+eg. primeng, inside have primeng.module.ts, just move them there and then say
+import {PrimeengModule} from './primeng/primeng.module'
+like in  https://www.youtube.com/watch?v=G4BBNq1tgwE
+*/
