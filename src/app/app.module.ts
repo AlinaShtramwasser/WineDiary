@@ -27,6 +27,7 @@ import { ModifyWineryComponent } from './modify-winery/modify-winery.component';
 import { LoginComponent } from './login/login.component';
 import { CredentialResponse, PromptMomentNotification } from 'google-one-tap';
 import { AuthGuardTs } from './guards/auth.guard';
+import { httpInterceptorProviders } from './interceptors/interceptor-providers';
 @NgModule({
   declarations: [
     AppComponent,
@@ -67,7 +68,7 @@ import { AuthGuardTs } from './guards/auth.guard';
     AngularMaterialModule,
     PanelModule
   ],
-  providers: [MessageService],
+  providers: [MessageService, httpInterceptorProviders],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

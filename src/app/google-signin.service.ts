@@ -28,7 +28,7 @@ export class GoogleSigninService {
   logInWithGoogle(credential: string): Observable<any> {
     this.path = "http://localhost:12895/LoginWithGoogle/"; 
     const header = new HttpHeaders().set('Content-type', "application/json");
-    //observable tutorial: https://www.tektutorialshub.com/angular/angular-observable-tutorial-using-rxjs/
+    //fyi: observable tutorial: https://www.tektutorialshub.com/angular/angular-observable-tutorial-using-rxjs/
 
     return this.http.post(this.path, JSON.stringify(credential), { headers: header, withCredentials: true });
   }

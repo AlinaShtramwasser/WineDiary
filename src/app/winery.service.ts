@@ -19,8 +19,8 @@ export class WineryService {
     */
   baseUrl: string;
   codeName: string;
-  token: string;
-  httpOptions: HttpHeaders;
+  // token: string;
+  // httpOptions: HttpHeaders;
   headers = new HttpHeaders({ 'Content-Type': 'application/json' });
 
   /*
@@ -29,20 +29,23 @@ export class WineryService {
   constructor(protected httpClient: HttpClient) {
     this.codeName = 'winery.service';
     this.baseUrl = "http://localhost:12895/api/winery/";
-    this.token = JSON.parse(localStorage.getItem("token") || "");
-    this.httpOptions = new HttpHeaders().set('Authorization', 'Bearer ' + this.token); 
+
+    // this.token = JSON.parse(localStorage.getItem("token") || "");
+    // this.httpOptions = new HttpHeaders().set('Authorization', 'Bearer ' + this.token); 
   }
   /*
   ** Read (get) all Wineries.
   */
   getWineries(): Observable<any> {
-    return this.httpClient.get(this.baseUrl, {headers: this.httpOptions});
+    //return this.httpClient.get(this.baseUrl, {headers: this.httpOptions});
+    return this.httpClient.get(this.baseUrl);
   }
 
 
   getWinery(id: string | null | undefined): Observable<any> {
     const url = this.baseUrl + id;
-    return this.httpClient.get(url, {headers: this.httpOptions})
+    //return this.httpClient.get(url, {headers: this.httpOptions})
+    return this.httpClient.get(url)
       //used for debugging, tap allows xss to data wzt modifying it
       .pipe(
         tap(data => console.log('getWinery: ' + JSON.stringify(data))),
@@ -52,26 +55,29 @@ export class WineryService {
 
   //Post (api/winery) to add a new one
   createWinery(winery: IWinery): Observable<any> {
-    return this.httpClient.post<Winery>(this.baseUrl, winery, { headers: this.httpOptions });
+    return this.httpClient.post<Winery>(this.baseUrl, winery, { headers: this.headers });
+    // return this.httpClient.post<Winery>(this.baseUrl, winery, { headers: this.httpOptions });
 
   }
 
   //Put (api/winery/id) to change idempotent call
   updateWinery(winery: IWinery): Observable<any> {
     const url = this.baseUrl + winery.Id;
-    return this.httpClient.put<Winery>(url, winery, { headers: this.httpOptions });
+    return this.httpClient.put<Winery>(url, winery, { headers: this.headers });
+    //return this.httpClient.put<Winery>(url, winery, { headers: this.httpOptions });
   }
 
   //Put (api/winery/rating/id/ratingId)
   updateRating(wineryId: string, ratingId: number): Observable<any> {
     const url = this.baseUrl + "rating" + "/" + wineryId + "/" + ratingId;
     console.log(url);
-    return this.httpClient.put<Winery>(url, { headers: this.httpOptions });
+    return this.httpClient.put<Winery>(url, { headers: this.headers });
   }
 
   deleteWinery(id: string): Observable<any> {
     const url = this.baseUrl + id;
-    return this.httpClient.delete<Winery>(url, { headers: this.httpOptions });
+    return this.httpClient.delete<Winery>(url, { headers: this.headers });
+    //return this.httpClient.delete<Winery>(url, { headers: this.httpOptions });
   }
 
   /*
