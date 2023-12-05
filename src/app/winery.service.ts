@@ -19,6 +19,8 @@ export class WineryService {
     */
   baseUrl: string;
   codeName: string;
+  // token: string;
+  // httpOptions: HttpHeaders;
   headers = new HttpHeaders({ 'Content-Type': 'application/json' });
 
   /*
@@ -27,18 +29,22 @@ export class WineryService {
   constructor(protected httpClient: HttpClient) {
     this.codeName = 'winery.service';
     this.baseUrl = "http://localhost:12895/api/winery/";
+
+    // this.token = JSON.parse(localStorage.getItem("token") || "");
+    // this.httpOptions = new HttpHeaders().set('Authorization', 'Bearer ' + this.token); 
   }
   /*
-  ** Read (get) all Winery.
+  ** Read (get) all Wineries.
   */
   getWineries(): Observable<any> {
+    //return this.httpClient.get(this.baseUrl, {headers: this.httpOptions});
     return this.httpClient.get(this.baseUrl);
   }
 
 
-  //check if I can use Winery or IWinery and get<Winery> etc
   getWinery(id: string | null | undefined): Observable<any> {
     const url = this.baseUrl + id;
+    //return this.httpClient.get(url, {headers: this.httpOptions})
     return this.httpClient.get(url)
       //used for debugging, tap allows xss to data wzt modifying it
       .pipe(
@@ -50,6 +56,7 @@ export class WineryService {
   //Post (api/winery) to add a new one
   createWinery(winery: IWinery): Observable<any> {
     return this.httpClient.post<Winery>(this.baseUrl, winery, { headers: this.headers });
+    // return this.httpClient.post<Winery>(this.baseUrl, winery, { headers: this.httpOptions });
 
   }
 
@@ -57,6 +64,7 @@ export class WineryService {
   updateWinery(winery: IWinery): Observable<any> {
     const url = this.baseUrl + winery.Id;
     return this.httpClient.put<Winery>(url, winery, { headers: this.headers });
+    //return this.httpClient.put<Winery>(url, winery, { headers: this.httpOptions });
   }
 
   //Put (api/winery/rating/id/ratingId)
@@ -69,6 +77,7 @@ export class WineryService {
   deleteWinery(id: string): Observable<any> {
     const url = this.baseUrl + id;
     return this.httpClient.delete<Winery>(url, { headers: this.headers });
+    //return this.httpClient.delete<Winery>(url, { headers: this.httpOptions });
   }
 
   /*

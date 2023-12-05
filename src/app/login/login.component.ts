@@ -28,8 +28,8 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit() {//@ts-ignore window.OnGoogleLibraryLoad
-    //create the button here for the google login
     
+    //create the button here for the google login
     window.onGoogleLibraryLoad = () => {
       //@ts-ignore - this talks to google through the google-one-tap package
       google.accounts.id.initialize({
@@ -58,9 +58,10 @@ export class LoginComponent implements OnInit {
   }
   //this is in minute 13:07 in the youtube tutorial, environment file is 13:58, the authentication part is 23:52 need to watch his other tutorials to figure out how to authenticate
   async handleCredentialResponse(response: CredentialResponse): Promise<void> {
+    console.log("in handling credential");
     this.service.logInWithGoogle(response.credential).subscribe({
       next: (x): void => {
-        localStorage.setItem("token", x.token);
+        localStorage.setItem("token", JSON.stringify(x.token.token));
         this._ngZone.run(() => {
           this.router.navigate(['wineries']);
         });

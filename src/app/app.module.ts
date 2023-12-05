@@ -6,17 +6,17 @@ import { AppComponent } from './app.component';
 //import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ReactiveFormsModule } from '@angular/forms';
-import {PanelModule} from 'primeng/panel';
-import {InputTextModule} from 'primeng/inputtext';
-import {InputMaskModule} from 'primeng/inputmask';
+import { PanelModule } from 'primeng/panel';
+import { InputTextModule } from 'primeng/inputtext';
+import { InputMaskModule } from 'primeng/inputmask';
 import { ToastModule } from 'primeng/toast';
-import {VirtualScrollerModule} from 'primeng/virtualscroller';
+import { VirtualScrollerModule } from 'primeng/virtualscroller';
 import { MessageService } from 'primeng/api';
-import {RatingModule} from 'primeng/rating';
-import {ButtonModule} from 'primeng/button';
+import { RatingModule } from 'primeng/rating';
+import { ButtonModule } from 'primeng/button';
 //for fetching data from external apis and provide them to the app as a stream
 import { HttpClientModule } from "@angular/common/http";
-import {TableModule} from 'primeng/table';
+import { TableModule } from 'primeng/table';
 import { WineryService } from './winery.service';
 import { WineryListComponent } from './winery-list/winery-list.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -26,15 +26,17 @@ import { ModifyWineryComponent } from './modify-winery/modify-winery.component';
 //for login with google
 import { LoginComponent } from './login/login.component';
 import { CredentialResponse, PromptMomentNotification } from 'google-one-tap';
+import { AuthGuardTs } from './guards/auth.guard';
+import { httpInterceptorProviders } from './interceptors/interceptor-providers';
 @NgModule({
-  declarations: [		
+  declarations: [
     AppComponent,
     WineryListComponent,
     MatConfirmDialogComponent,
     MatConfirmDialogComponent,
-      ModifyWineryComponent,
-      LoginComponent
-   ],
+    ModifyWineryComponent,
+    LoginComponent
+  ],
   imports: [
     BrowserModule,
     FormsModule,
@@ -47,20 +49,17 @@ import { CredentialResponse, PromptMomentNotification } from 'google-one-tap';
     HttpClientModule,
     RouterModule.forRoot([
       { path: "", component: LoginComponent },
-      {path: 'wineries', component: WineryListComponent},
+      {
+        path: 'wineries',
+        component: WineryListComponent,
+        canActivate: [AuthGuardTs],
+      },
       {
         path: 'wineries/:id/edit',
-        component: ModifyWineryComponent
+        component: ModifyWineryComponent,
+        canActivate: [AuthGuardTs],
       }
     ]),
-    // RouterModule.forRoot([
-    //   { path: "", component: WineryListComponent },
-    //   {path: 'wineries', component: WineryListComponent},
-    //   {
-    //     path: 'wineries/:id/edit',
-    //     component: ModifyWineryComponent
-    //   }
-    // ]),
     TableModule,
     ToastModule,
     InputMaskModule,
@@ -69,7 +68,7 @@ import { CredentialResponse, PromptMomentNotification } from 'google-one-tap';
     AngularMaterialModule,
     PanelModule
   ],
-  providers: [MessageService],
+  providers: [MessageService, httpInterceptorProviders],
   bootstrap: [AppComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })

@@ -20,7 +20,6 @@ export class WineryListComponent implements OnInit {
 	totalRecords: number = 0;
 	email: string | undefined;
 	name: string | undefined;
-	token: string | undefined;
 	@Output() onSigninSuccess = new EventEmitter();
 	@Input() clientId: string | undefined;
 	alternativeUrl: string = "assets/images/wineryLogo.jpg"
@@ -41,7 +40,7 @@ export class WineryListComponent implements OnInit {
 	** On component initialization, get all data from the data service.
 	*/
 	ngOnInit() {
-
+        console.log("in init for wineries");
 		// load all records
 		this.getAllWineries();
 		//setting up all the fields and validations
@@ -88,7 +87,7 @@ export class WineryListComponent implements OnInit {
 
 	//getting all the wineries
 	getAllWineries(): void {
-
+		console.log("in get wineries");
 		this.getAllSubscription = this._data.getWineries().subscribe({
 			next: wineries => {
 				this.wineries = wineries;
@@ -140,3 +139,7 @@ export class WineryListComponent implements OnInit {
 	}
 
 }
+
+/*might want to create a user with google credential and is authenticated boolean then for the router links 
+ <a mat-fab color="primary" class="m-2" *ngIf="user!.IsAuthenticated" [routerLink]="['/wineries',  winery.Id, 'edit']">
+*/
