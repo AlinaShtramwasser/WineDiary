@@ -38,11 +38,8 @@
 
         <div class="m-5">
           <span class="p-float-label">
-            <textarea *ngIf="!smallDevice" maxlength="250" id="WineryNotes" rows="5" cols="50"
+            <textarea maxlength="250" id="WineryNotes" rows="5" 
               formControlName="wineryNotes" pInputTextArea></textarea>
-            <textarea *ngIf="smallDevice" maxlength="250" id="WineryNotes" rows="5" cols="35"
-              formControlName="wineryNotes" pInputTextArea></textarea>
-            <label for="WineryNotes">Notes</label>
           </span>
 
         </div>
