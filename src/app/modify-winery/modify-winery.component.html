@@ -1,6 +1,6 @@
 <div class="container">
   <form novalidate (ngSubmit)="save();" [formGroup]="wineryForm" class="p-fluid grid">
-    <div class="col-6 mx-auto pt-5">
+    <div [ngClass]="!smallDevice ? 'col-6 mx-auto pt-5' : 'mx-auto pt-3'">
       <p-panel header={{pageTitle}}>
 
         <div class="m-5">
@@ -38,10 +38,13 @@
 
         <div class="m-5">
           <span class="p-float-label">
-            <textarea maxlength="250" id="WineryNotes" rows="5" cols="50" formControlName="wineryNotes"
-              pInputTextArea></textarea>
+            <textarea *ngIf="!smallDevice" maxlength="250" id="WineryNotes" rows="5" cols="50"
+              formControlName="wineryNotes" pInputTextArea></textarea>
+            <textarea *ngIf="smallDevice" maxlength="250" id="WineryNotes" rows="5" cols="35"
+              formControlName="wineryNotes" pInputTextArea></textarea>
             <label for="WineryNotes">Notes</label>
           </span>
+
         </div>
 
         <div class="m-5">
@@ -50,13 +53,13 @@
         </div>
 
         <div class="row pb-2 justify-content-center col-12">
-          <div class="col-3">
+          <div class="col-5">
             <button pButton type="button" class="p-button-rounded" label="Submit" (click)="save();"
               [disabled]="!wineryForm.valid">
             </button>
           </div>
-          <div class="col-2">
-            <!-- remember to maybe confirm that the user wants to leave -->
+          <div class="col-5">
+            <!-- at some point I might want to confirm if the user wants to leave -->
             <button pButton type="button" class="p-button-rounded" label="Back" [routerLink]="['/wineries']">
             </button>
           </div>

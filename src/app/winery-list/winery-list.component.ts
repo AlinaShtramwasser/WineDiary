@@ -48,6 +48,8 @@ export class WineryListComponent implements OnInit {
 		console.log("in init for wineries");
 		// load all records
 		this.getAllWineries();
+
+		//for responsiveness
 		this.responsive.observe([
 			Breakpoints.Handset,
 			Breakpoints.HandsetLandscape,

@@ -7,12 +7,14 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { WineryService } from '../winery.service';
 import { MessageService } from 'primeng/api';
 import { __metadata } from 'tslib';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 
 @Component({
   selector: 'app-modify-winery',
   templateUrl: './modify-winery.component.html',
   styleUrls: ['./modify-winery.component.css']
 })
+
 export class ModifyWineryComponent implements OnInit {
   wineryForm!: FormGroup;
   winery!: IWinery;
@@ -22,14 +24,18 @@ export class ModifyWineryComponent implements OnInit {
   id: string | null | undefined;
   _router: Router;
   private getSubscription: Subscription | undefined;
+  smallDevice: boolean;
+
 
   constructor(private fb: FormBuilder,
     private route: ActivatedRoute,
     private router: Router,
     private _data: WineryService,
-    private _messageService: MessageService
+    private _messageService: MessageService,
+    private responsive: BreakpointObserver
   ) {
     this._router = router;
+    this.smallDevice = false;
   }
 
   ngOnDestroy() {
@@ -39,6 +45,7 @@ export class ModifyWineryComponent implements OnInit {
   }
 
   ngOnInit() {
+
     //setting up all the fields and validations
     this.wineryForm = this.fb.group({
       wineryName: ['', Validators.required],
@@ -87,6 +94,24 @@ export class ModifyWineryComponent implements OnInit {
         }
       }
     );
+
+    //for responsiveness
+    this.responsive.observe([
+      Breakpoints.Handset,
+      Breakpoints.HandsetLandscape,
+      Breakpoints.HandsetPortrait,
+      Breakpoints.Tablet,
+      Breakpoints.TabletLandscape,
+      Breakpoints.TabletPortrait
+    ])
+      .subscribe(result => {
+
+        this.smallDevice = false;
+
+        if (result.matches) {
+          this.smallDevice = true;
+        }
+      });
   }
 
   getWinery(id: string | null | undefined): void {
