@@ -5,45 +5,53 @@
         <th>
           <span class="winery-header">My Wineries</span>
         </th>
-        <th colspan="2">
+        <th >
           <p-button label="Logout" (click)="logout()" styleClass="p-button-danger"></p-button>
         </th>
-        <th>
-          <span class="p-4">
-            <a mat-fab color="basic" [routerLink]="['/wineries', 0, 'edit']">
+        <th style="text-align:end" colspan="3">
+          <span  class="p-4">
+            <a mat-fab *ngIf="!smallDevice" color="basic" [routerLink]="['/wineries', 0, 'edit']">
+              <span class="material-icons">add</span>
+            </a>
+            <a mat-mini-fab *ngIf="smallDevice" color="basic" [routerLink]="['/wineries', 0, 'edit']">
               <span class="material-icons">add</span>
             </a>
           </span>
         </th>
       </tr>
-      <tr>
+      <tr class="winery-sorting-area">
         <th style="text-align:left" [pSortableColumn]='"Name"'>Name
           <p-sortIcon [field]='"Name"'></p-sortIcon>
           <p-columnFilter type='text' field='Name' display='menu'></p-columnFilter>
         </th>
-        <th style="text-align:left">Phone Number</th>
-        <th style="text-align:left" [pSortableColumn]='"Rating"'>Rating
+        <th style="text-align:left">Phone</th>
+        <th colspan="2" style="text-align:left" [pSortableColumn]='"Rating"'>Rating
           <p-sortIcon [field]='"Rating"'></p-sortIcon>
-        </th>
-        <th colspan="2">
         </th>
       </tr>
     </ng-template>
     <ng-template pTemplate="body" let-winery>
       <tr class="winery-data">
         <td style="text-align:left">
-          <img src="assets/images/wineryLogo.jpg" alt="{{winery.Name}}" width="100" class="p-shadow-4" />
+          <img *ngIf="!smallDevice" src="assets/images/wineryLogo.jpg" alt="{{winery.Name}}" width="100" class="p-shadow-4" />
           {{winery.Name}}
         </td>
         <td style="text-align:left">{{winery.Phone}}</td>
         <td style="text-align:left">
-          <p-rating [ngModel]="winery.Rating" (onRate)="saveRating($event, winery.Id);" [cancel]="false"></p-rating>
+          <span class="rating-on-small" *ngIf="smallDevice">{{winery.Rating}}</span>
+          <p-rating  *ngIf="!smallDevice" [ngModel]="winery.Rating" (onRate)="saveRating($event, winery.Id);" [cancel]="false"></p-rating>
         </td>
-        <td colspan="2">
-          <a mat-fab color="primary" class="m-2" [routerLink]="['/wineries',  winery.Id, 'edit']">
+        <td style="text-align:center">
+          <a mat-fab *ngIf="!smallDevice" color="primary" class="m-2" [routerLink]="['/wineries',  winery.Id, 'edit']">
             <span class="material-icons">edit</span>
           </a>
-          <a mat-fab color="warn" (click)="deleteWinery(winery.Id);">
+          <a mat-fab *ngIf="!smallDevice" color="warn" (click)="deleteWinery(winery.Id);">
+            <span class="material-icons">delete</span>
+          </a>
+          <a mat-mini-fab *ngIf="smallDevice" color="primary" class="m-2" [routerLink]="['/wineries',  winery.Id, 'edit']">
+            <span class="material-icons">edit</span>
+          </a>
+          <a mat-mini-fab *ngIf="smallDevice" color="warn" (click)="deleteWinery(winery.Id);">
             <span class="material-icons">delete</span>
           </a>
         </td>

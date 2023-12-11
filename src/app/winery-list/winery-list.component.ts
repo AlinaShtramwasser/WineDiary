@@ -3,15 +3,16 @@ import { MessageService } from 'primeng/api';
 import { Subscription } from 'rxjs';
 import { DialogService } from '../dialog.service';
 import { WineryService } from '../winery.service';
-import { AbstractControl, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { GoogleSigninService } from '../google-signin.service';
+import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 
 @Component({
 	selector: 'app-winery-list',
 	templateUrl: './winery-list.component.html',
 	styleUrls: ['./winery-list.component.scss']
 })
+
 export class WineryListComponent implements OnInit {
 
 	private getAllSubscription: Subscription | undefined;
@@ -22,7 +23,8 @@ export class WineryListComponent implements OnInit {
 	name: string | undefined;
 	@Output() onSigninSuccess = new EventEmitter();
 	@Input() clientId: string | undefined;
-	alternativeUrl: string = "assets/images/wineryLogo.jpg"
+	alternativeUrl: string = "assets/images/wineryLogo.jpg";
+	smallDevice: boolean;
 	/*
 	** On component creation (inject services).
 	*/
@@ -33,46 +35,37 @@ export class WineryListComponent implements OnInit {
 		private _dialoService: DialogService,
 		private router: Router,
 		private service: GoogleSigninService,
-		private _ngZone: NgZone
-	) { }
+		private _ngZone: NgZone,
+		private responsive: BreakpointObserver
+	) {
+		this.smallDevice = false;
+	}
 
 	/*
 	** On component initialization, get all data from the data service.
 	*/
 	ngOnInit() {
-        console.log("in init for wineries");
+		console.log("in init for wineries");
 		// load all records
 		this.getAllWineries();
-		//setting up all the fields and validations
-		/*this.loginForm = this.fb.group({
-			googlePassword: ['', Validators.required],
-			googleEmail: ['', [Validators.required, Validators.email]],
-		});
 
-		this.socialAuthService.authState.subscribe((user) => {
-			this.socialUser = user;
-			this.isLoggedin = user != null;
-			console.log(this.socialUser);
-		});
+		//for responsiveness
+		this.responsive.observe([
+			Breakpoints.Handset,
+			Breakpoints.HandsetLandscape,
+			Breakpoints.HandsetPortrait,
+			Breakpoints.Tablet,
+			Breakpoints.TabletLandscape,
+			Breakpoints.TabletPortrait
+		])
+			.subscribe(result => {
 
-		const loginEmailControl = this.loginForm.get('googleEmail');
-		loginEmailControl.valueChanges.pipe(
-			debounceTime(1000)).subscribe(
-				value => this.setMessage({ control: loginEmailControl })
-			);*/
-	}
+				this.smallDevice = false;
 
-	/**
-	 * Calling Google Authentication service
-	 */
-	//   googleAuthenticate(){
-	//     this.auth.authenticateUser(this.clientId, this.onSigninSuccess);
-	//   }
-	setMessage({ control }: { control: AbstractControl; }): void {
-		/*this.emailErrorMessage = '';
-		if (control.errors) {
-			this.emailErrorMessage = "Please enter a valid email";
-		}*/
+				if (result.matches) {
+					this.smallDevice = true;
+				}
+			});
 	}
 
 	ngOnDestroy(): void {
