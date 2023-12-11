@@ -1,3 +1,4 @@
+//Service for handling signing in with google
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs/internal/Observable';
@@ -26,7 +27,8 @@ export class GoogleSigninService {
   }
 
   logInWithGoogle(credential: string): Observable<any> {
-    this.path = "http://localhost:12895/LoginWithGoogle/"; 
+    //this.path = "http://localhost:12895/LoginWithGoogle/"; 
+    this.path = "https://wineryapi.azurewebsites.net/LoginWithGoogle/";
     const header = new HttpHeaders().set('Content-type', "application/json");
     //fyi: observable tutorial: https://www.tektutorialshub.com/angular/angular-observable-tutorial-using-rxjs/
 

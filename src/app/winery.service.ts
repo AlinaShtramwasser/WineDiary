@@ -1,4 +1,3 @@
-//File: winery.service.ts
 //Service for getting winery information for the Wine Diary application
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpErrorResponse, HttpHeaders } from '@angular/common/http';
@@ -28,22 +27,28 @@ export class WineryService {
   */
   constructor(protected httpClient: HttpClient) {
     this.codeName = 'winery.service';
-    this.baseUrl = "http://localhost:12895/api/winery/";
-
+    //POC - really this should be in for eg. environment.ts and the azure one should be in environment.prod.ts eg in tutorial
+    //https://www.youtube.com/watch?v=u_CRppLcC9k&ab_channel=IsraelQuiroz 14 min in
+    //this.baseUrl = "http://localhost:12895/api/winery/";
+    this.baseUrl = "https://wineryapi.azurewebsites.net/api/winery/";
+    //If I don't use the interceptor setting the authorization would go like the below
     // this.token = JSON.parse(localStorage.getItem("token") || "");
     // this.httpOptions = new HttpHeaders().set('Authorization', 'Bearer ' + this.token); 
   }
+
   /*
   ** Read (get) all Wineries.
   */
   getWineries(): Observable<any> {
+    //If not using the interceptors:
     //return this.httpClient.get(this.baseUrl, {headers: this.httpOptions});
     return this.httpClient.get(this.baseUrl);
   }
 
-
+  //gets a single winery
   getWinery(id: string | null | undefined): Observable<any> {
     const url = this.baseUrl + id;
+    //If not using the interceptors:
     //return this.httpClient.get(url, {headers: this.httpOptions})
     return this.httpClient.get(url)
       //used for debugging, tap allows xss to data wzt modifying it
@@ -77,11 +82,12 @@ export class WineryService {
   deleteWinery(id: string): Observable<any> {
     const url = this.baseUrl + id;
     return this.httpClient.delete<Winery>(url, { headers: this.headers });
+    //If not using the interceptors:
     //return this.httpClient.delete<Winery>(url, { headers: this.httpOptions });
   }
 
   /*
-  ** General error handler, should throw a string.
+  ** General error handler, throws a string.
   */
   handleError(error: any) {
     if (error instanceof HttpErrorResponse) {

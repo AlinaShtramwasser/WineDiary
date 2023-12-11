@@ -1,0 +1,4 @@
+{
+    "appService.defaultWebAppToDeploy": "/subscriptions/7851d9d6-545f-40d0-b617-fd112c8e6ae4/resourceGroups/wineryResources/providers/Microsoft.Web/sites/WineryClient",
+    "appService.deploySubpath": "dist\\wine-diary"
+}
